@@ -1,0 +1,13 @@
+{
+  "name": "DynamoDB Scan Guard",
+  "version": "1.0.0",
+  "description": "Blocks any file write that introduces a DynamoDB Scan operation in Lambda code. Scan is strictly prohibited — all access must use GetItem or Query with a known PK.",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before writing this file, check if the content being written contains any DynamoDB Scan operations: look for '.scan(', 'client.scan', 'dynamodb.scan', 'DocumentClient.scan', or 'ScanCommand' in the content. If any Scan usage is found, do NOT proceed with the write. Flag the exact lines and explain that DynamoDB Scan is strictly prohibited in CLOIS per the data-conventions steering file. Suggest the correct Query or GetItem pattern instead. If no Scan usage is found, proceed with the write normally."
+  }
+}

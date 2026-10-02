@@ -1,0 +1,13 @@
+{
+  "name": "PII in Bedrock Prompt Guard",
+  "version": "1.0.0",
+  "description": "Blocks writes to AI Lambda files where Bedrock prompts could contain PII. Property 20 strictly prohibits email, memberId, or member name in any Bedrock prompt.",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before writing this file, if it is under infrastructure/lambda/ai/ or is circuitBreaker.ts, check the content being written for any code paths where a Bedrock prompt could include PII. Specifically check: (1) Are any Member record fields (name, email, phone, memberId) referenced in prompt construction? (2) Is any raw feedback text passed to Bedrock without PII stripping? (3) Is any variable sourced from a Member DynamoDB record used in a prompt string? If any PII risk is found, do NOT proceed with the write. Flag the specific lines and explain the required fix: prompts must contain only event metadata, aggregated statistics, or PII-stripped text. Reference Property 20 and the ai-bedrock-usage steering file. If no PII risk is found or the file is not AI-related, proceed with the write normally."
+  }
+}

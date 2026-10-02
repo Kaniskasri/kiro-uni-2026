@@ -1,0 +1,13 @@
+{
+  "name": "Tenant Isolation Guard",
+  "version": "1.0.0",
+  "description": "Blocks any repository file write where a Query or GetItem is missing a tenantId condition. Cross-org data leakage is a P0 security issue.",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before writing this file, if it is a repository.ts file, check every Query and GetItem call in the content being written. For each one, verify that a tenantId (or orgId) condition expression is included — either as a KeyConditionExpression, FilterExpression, or ConditionExpression. Also verify that orgId is sourced from the authorizer context, not from the request body or query string. If any Query or GetItem is missing the tenantId condition, do NOT proceed with the write. Flag the exact function and explain the required fix. Multi-tenant isolation is the most critical security invariant in CLOIS — cross-org data leakage is a P0 issue. If the file is not a repository.ts or all queries include proper tenantId conditions, proceed with the write normally."
+  }
+}

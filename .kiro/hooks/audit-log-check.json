@@ -1,0 +1,13 @@
+{
+  "name": "Audit Log Coverage Check",
+  "version": "1.0.0",
+  "description": "After writing a Lambda handler, checks that auditable operations actually call writeAuditLog. Catches audit log gaps right after the agent writes the file.",
+  "when": {
+    "type": "postToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A file was just written. If it is a Lambda handler.ts file, review it for any operations that require an Audit Log entry per the security-and-multitenancy steering file. Operations that MUST call writeAuditLog() are: user login, logout, failed login, MFA lockout, password change, role assignment change, member removal, org creation, org deactivation, event state transition, ticket creation, ticket cancellation, bulk invitation submission, AI generation request, and data export request. For each such operation, verify writeAuditLog() is called with all required fields: timestamp, actor, targetType, targetId, operation, sourceIp, and outcome. If any required audit log call is missing or incomplete, flag it with the specific fix needed. If the file is not a handler.ts or audit logging is correct, do nothing."
+  }
+}

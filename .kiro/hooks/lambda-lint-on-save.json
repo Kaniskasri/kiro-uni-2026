@@ -1,0 +1,18 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Lambda ESLint on Save",
+      "trigger": "fileEdited",
+      "patterns": [
+        "infrastructure/lambda/**/*.ts"
+      ],
+      "description": "Runs ESLint on any Lambda TypeScript file when saved. Keeps backend code clean without waiting for CI.",
+      "action": {
+        "type": "command",
+        "command": "cd infrastructure && npx eslint \"%file%\" --max-warnings 0 --format compact 2>&1 | tail -20",
+        "timeout": 30
+      }
+    }
+  ]
+}

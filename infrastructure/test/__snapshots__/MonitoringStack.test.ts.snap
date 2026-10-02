@@ -1,0 +1,303 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MonitoringStack > matches snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "AiRequestDlqAlarm3B64546B": {
+      "Properties": {
+        "AlarmDescription": "AI request DLQ has messages",
+        "AlarmName": "clois-monitoring-ai-request-dlq",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "QueueName",
+            "Value": {
+              "Fn::ImportValue": "TestDepStack:ExportsOutputFnGetAttAiRequestDlqF5A95207QueueNameD5F10B6F",
+            },
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "ApproximateNumberOfMessagesVisible",
+        "Namespace": "AWS/SQS",
+        "Period": 60,
+        "Statistic": "Maximum",
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "CircuitBreakerOpenAlarmAD2F09F9": {
+      "Properties": {
+        "AlarmDescription": "Bedrock circuit breaker has opened (5 consecutive failures)",
+        "AlarmName": "clois-circuit-breaker-open",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "Service",
+            "Value": "bedrock",
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "CircuitOpen",
+        "Namespace": "CLOIS/CircuitBreaker",
+        "Period": 60,
+        "Statistic": "Maximum",
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "DynamoDbThrottlesAlarmB1147CBB": {
+      "Properties": {
+        "AlarmDescription": "DynamoDB throttle events detected on clois-main",
+        "AlarmName": "clois-dynamodb-throttles",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "EvaluationPeriods": 1,
+        "Metrics": [
+          {
+            "Expression": "getitem + putitem + query + updateitem",
+            "Id": "expr_1",
+            "Label": "Sum of throttled requests across all operations",
+          },
+          {
+            "Id": "getitem",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "Operation",
+                    "Value": "GetItem",
+                  },
+                  {
+                    "Name": "TableName",
+                    "Value": {
+                      "Fn::ImportValue": "TestDepStack:ExportsOutputRefMainTable74195DAB4503BD7E",
+                    },
+                  },
+                ],
+                "MetricName": "ThrottledRequests",
+                "Namespace": "AWS/DynamoDB",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "putitem",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "Operation",
+                    "Value": "PutItem",
+                  },
+                  {
+                    "Name": "TableName",
+                    "Value": {
+                      "Fn::ImportValue": "TestDepStack:ExportsOutputRefMainTable74195DAB4503BD7E",
+                    },
+                  },
+                ],
+                "MetricName": "ThrottledRequests",
+                "Namespace": "AWS/DynamoDB",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "query",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "Operation",
+                    "Value": "Query",
+                  },
+                  {
+                    "Name": "TableName",
+                    "Value": {
+                      "Fn::ImportValue": "TestDepStack:ExportsOutputRefMainTable74195DAB4503BD7E",
+                    },
+                  },
+                ],
+                "MetricName": "ThrottledRequests",
+                "Namespace": "AWS/DynamoDB",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "updateitem",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "Operation",
+                    "Value": "UpdateItem",
+                  },
+                  {
+                    "Name": "TableName",
+                    "Value": {
+                      "Fn::ImportValue": "TestDepStack:ExportsOutputRefMainTable74195DAB4503BD7E",
+                    },
+                  },
+                ],
+                "MetricName": "ThrottledRequests",
+                "Namespace": "AWS/DynamoDB",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "LambdaErrorRateAlarm35685FAA": {
+      "Properties": {
+        "AlarmDescription": "Lambda error rate has exceeded 1%",
+        "AlarmName": "clois-lambda-error-rate",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "EvaluationPeriods": 2,
+        "Metrics": [
+          {
+            "Expression": "(errors / invocations) * 100",
+            "Id": "expr_1",
+            "Label": "Lambda Error Rate (%)",
+          },
+          {
+            "Id": "errors",
+            "MetricStat": {
+              "Metric": {
+                "MetricName": "Errors",
+                "Namespace": "AWS/Lambda",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+          {
+            "Id": "invocations",
+            "MetricStat": {
+              "Metric": {
+                "MetricName": "Invocations",
+                "Namespace": "AWS/Lambda",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 1,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "NotificationDlqAlarmEF175D8A": {
+      "Properties": {
+        "AlarmDescription": "Notification DLQ has messages",
+        "AlarmName": "clois-monitoring-notification-dlq",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "QueueName",
+            "Value": {
+              "Fn::ImportValue": "TestDepStack:ExportsOutputFnGetAttNotificationDlq467FCAE6QueueName2E5F0C5C",
+            },
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "ApproximateNumberOfMessagesVisible",
+        "Namespace": "AWS/SQS",
+        "Period": 60,
+        "Statistic": "Maximum",
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ReportDlqAlarm72790974": {
+      "Properties": {
+        "AlarmDescription": "Report DLQ has messages",
+        "AlarmName": "clois-monitoring-report-dlq",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "QueueName",
+            "Value": {
+              "Fn::ImportValue": "TestDepStack:ExportsOutputFnGetAttReportDlqA33CA7F9QueueName5D3B3397",
+            },
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "ApproximateNumberOfMessagesVisible",
+        "Namespace": "AWS/SQS",
+        "Period": 60,
+        "Statistic": "Maximum",
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "StepFunctionsFailuresAlarm4D1CCFF1": {
+      "Properties": {
+        "AlarmDescription": "Step Functions executions have failed",
+        "AlarmName": "clois-stepfunctions-failures",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "EvaluationPeriods": 1,
+        "MetricName": "ExecutionsFailed",
+        "Namespace": "AWS/States",
+        "Period": 300,
+        "Statistic": "Sum",
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
