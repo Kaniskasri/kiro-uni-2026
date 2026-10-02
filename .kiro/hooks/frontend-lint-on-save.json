@@ -1,0 +1,19 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Frontend ESLint on Save",
+      "trigger": "fileEdited",
+      "patterns": [
+        "frontend/src/**/*.ts",
+        "frontend/src/**/*.tsx"
+      ],
+      "description": "Runs ESLint on any frontend TypeScript/TSX file when saved. Zero warnings allowed per steering standards.",
+      "action": {
+        "type": "command",
+        "command": "cd frontend && npx eslint \"%file%\" --max-warnings 0 --format compact 2>&1 | tail -20",
+        "timeout": 30
+      }
+    }
+  ]
+}

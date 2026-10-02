@@ -1,0 +1,19 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Property-Based Test Runner",
+      "trigger": "fileEdited",
+      "patterns": [
+        "infrastructure/lambda/src/__tests__/properties/**/*.ts",
+        "frontend/src/__tests__/properties/**/*.ts"
+      ],
+      "description": "Runs the specific property test file immediately when it is saved. Gives fast feedback on the 30 correctness properties without running the full test suite.",
+      "action": {
+        "type": "command",
+        "command": "npx vitest run \"%file%\" --reporter=verbose 2>&1 | tail -40",
+        "timeout": 60
+      }
+    }
+  ]
+}
