@@ -1,0 +1,332 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "2.1 Implement `AuthorizerFn` (Lambda Authorizer)": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051407963
+      },
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051430663
+      }
+    ],
+    "2.3 Implement Auth API Lambda endpoints": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408160
+      }
+    ],
+    "2.5 Implement `APIStack.ts` CDK construct: API Gateway REST API under `/v1/`, attach `AuthorizerFn` as token authorizer, configure `X-Correlation-ID` context variable propagation, and wire all Lambda integrations for auth routes": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408281
+      }
+    ],
+    "3. Checkpoint — Ensure auth tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408349
+      }
+    ],
+    "4.1 Implement `OrgsFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408412
+      }
+    ],
+    "4.4 Implement `MembersFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408492
+      }
+    ],
+    "5. Checkpoint — Ensure all org and member tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408538
+      }
+    ],
+    "6.1 Implement `VenuesFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408613
+      }
+    ],
+    "7.1 Implement `EventsFn` Lambda — CRUD and lifecycle transitions": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408721
+      }
+    ],
+    "7.4 Implement `WorkflowStack.ts` Step Functions state machines": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408780
+      }
+    ],
+    "8.1 Implement `TicketsFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408848
+      }
+    ],
+    "8.5 Implement `CheckInFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051408943
+      }
+    ],
+    "9. Checkpoint — Ensure all event, ticket, and check-in tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409030
+      }
+    ],
+    "10.1 Implement WebSocket Lambda handlers": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409102
+      }
+    ],
+    "10.2 Implement `NotificationWorkerFn` (SQS consumer on `notification-queue`)": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409164
+      }
+    ],
+    "10.4 Implement `AnnouncementsFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409277
+      }
+    ],
+    "11. Checkpoint — Ensure all real-time and notification tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409347
+      }
+    ],
+    "12.1 Implement `AnalyticsFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409435
+      }
+    ],
+    "12.2 Implement `ReportWorkerFn` (SQS consumer on `report-queue`)": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409541
+      }
+    ],
+    "13.1 Implement circuit breaker middleware (`/opt/circuitBreaker`)": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409609
+      }
+    ],
+    "13.3 Implement `AIFn` Lambda and `AIWorkerFn`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409663
+      }
+    ],
+    "14.1 Implement `CalendarFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409721
+      }
+    ],
+    "14.3 Implement `DataPrivacyFn` Lambda": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409788
+      }
+    ],
+    "15. Checkpoint — Ensure all analytics, AI, calendar, and data privacy tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409866
+      }
+    ],
+    "16.1 Implement `AuditLogFn` Lambda and audit writer utility": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409921
+      }
+    ],
+    "16.3 Implement fine-grained RBAC permission map in Lambda shared layer (`/opt/rbac`)": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051409966
+      }
+    ],
+    "17.1 Define JSON Schema for all API request/response bodies and domain events": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410012
+      }
+    ],
+    "17.3 Implement unified error response middleware": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410080
+      }
+    ],
+    "18. Checkpoint — Ensure all audit, RBAC, and API contract tests pass, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410157
+      }
+    ],
+    "19.1 Initialise Vite + React 18 + TypeScript 5 project under `frontend/`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410228
+      }
+    ],
+    "19.2 Implement public authentication pages": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410277
+      }
+    ],
+    "20.1 Build `CreateOrgPage` and `OrgSettingsPage`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410322
+      }
+    ],
+    "20.2 Build `MembersPage` with invitation and role management": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410391
+      }
+    ],
+    "21.1 Build `EventsListPage`, `CreateEventPage`, `EditEventPage`, `EventDetailPage`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410460
+      }
+    ],
+    "22.1 Build `TicketCard` and RSVP flow": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410506
+      }
+    ],
+    "22.2 Build `CheckInPage` with QR scanner and manual check-in": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410557
+      }
+    ],
+    "23.1 Build `DashboardPage`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410606
+      }
+    ],
+    "23.2 Build `AnalyticsPage` and trend report UI": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410653
+      }
+    ],
+    "23.3 Build notification bell and `AuditLogPage`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410702
+      }
+    ],
+    "24.1 Build `ProfilePage` and `DataExportPage`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410761
+      }
+    ],
+    "24.2 Build `VenuesPage`, `CreateVenuePage`": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410838
+      }
+    ],
+    "24.3 Implement accessibility compliance across all MVP pages": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410925
+      }
+    ],
+    "25. Final checkpoint — Ensure all tests pass end-to-end, ask the user if questions arise.": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051410973
+      }
+    ],
+    "1.1 Write CDK snapshot tests for DatabaseStack, StorageStack, AuthStack": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051417538
+      }
+    ],
+    "1. Bootstrap CDK project and core infrastructure stacks": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051417595
+      }
+    ],
+    "1.2 Write CDK snapshot tests for MessagingStack, CdnStack, MonitoringStack": [
+      {
+        "executionId": "fc5e7c92-ed82-40bd-b057-85043a08d376",
+        "chatSessionId": "354b97d7-2596-4217-9dda-857d544c88be",
+        "timestamp": 1791051423909
+      }
+    ]
+  }
+}
