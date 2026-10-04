@@ -6,9 +6,5 @@ export default defineConfig({
     environment: 'node',
     include: ['src/__tests__/**/*.test.ts'],
     reporters: ['verbose'],
-    pool: 'vmThreads',
-    poolOptions: {
-      vmThreads: { useAtomics: false },
-    },
   },
 });

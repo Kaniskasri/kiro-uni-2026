@@ -31,7 +31,9 @@ async function getJwks(): Promise<JwkKey[]> {
 }
 
 function jwkToPem(jwk: JwkKey): string {
-  const keyObject = crypto.createPublicKey({ key: { kty: jwk.kty, n: jwk.n, e: jwk.e }, format: 'jwk' } as crypto.KeyObjectCreationOptions);
+  // Use type assertion to bypass incomplete Node typings for JWK format
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const keyObject = crypto.createPublicKey({ key: { kty: jwk.kty, n: jwk.n, e: jwk.e } as any, format: 'jwk' });
   return keyObject.export({ type: 'spki', format: 'pem' }) as string;
 }
 
