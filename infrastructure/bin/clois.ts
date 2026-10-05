@@ -7,6 +7,7 @@ import { AuthStack } from '../lib/stacks/AuthStack';
 import { MessagingStack } from '../lib/stacks/MessagingStack';
 import { CdnStack } from '../lib/stacks/CdnStack';
 import { MonitoringStack } from '../lib/stacks/MonitoringStack';
+import { WorkflowStack } from '../lib/stacks/WorkflowStack';
 
 const app = new cdk.App();
 
@@ -31,6 +32,14 @@ new MonitoringStack(app, 'CloisMonitoringStack', {
   reportDlq: messagingStack.reportDlq,
   aiRequestDlq: messagingStack.aiRequestDlq,
   mainTable: databaseStack.mainTable,
+});
+
+new WorkflowStack(app, 'CloisWorkflowStack', {
+  env,
+  mainTable: databaseStack.mainTable,
+  auditLogTable: databaseStack.auditLogTable,
+  notificationQueue: messagingStack.notificationQueue,
+  assetsBucket: storageStack.assetsBucket,
 });
 
 // Suppress unused variable warnings for stacks consumed by future tasks
