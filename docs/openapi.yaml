@@ -1,0 +1,1992 @@
+﻿openapi: "3.1.0"
+info:
+  title: CLOIS – Community Lifecycle Orchestration and Intelligence System
+  version: "1.0.0"
+  description: |
+    REST API for CLOIS. All endpoints are under the /v1/ prefix.
+    Authentication uses AWS Cognito JWT bearer tokens validated by the Lambda Authorizer.
+    Multi-tenant: every request is scoped to an orgId derived from the JWT claim.
+servers:
+  - url: https://api.clois.example.com/v1
+    description: Production
+  - url: https://api-staging.clois.example.com/v1
+    description: Staging
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [errorCode, message, correlationId]
+      properties:
+        errorCode:
+          type: string
+          example: "event.invalid_transition"
+        message:
+          type: string
+          maxLength: 500
+          example: "Invalid state transition: Draft -> Completed"
+        correlationId:
+          type: string
+          example: "req-abc123"
+
+    PaginatedResponse:
+      type: object
+      properties:
+        nextToken:
+          type: string
+          nullable: true
+          description: Base64-encoded cursor for next page
+        count:
+          type: integer
+
+    Organization:
+      type: object
+      required: [orgId, name, slug, status, createdAt]
+      properties:
+        orgId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 3
+          maxLength: 63
+          pattern: "^[a-z0-9-]+$"
+        status:
+          type: string
+          enum: [Active, Deactivated]
+        createdAt:
+          type: string
+          format: date-time
+
+    Member:
+      type: object
+      required: [memberId, email, role, joinedAt]
+      properties:
+        memberId:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        role:
+          $ref: "#/components/schemas/OrgRole"
+        joinedAt:
+          type: string
+          format: date-time
+
+    OrgRole:
+      type: string
+      enum: [Owner, Admin, Organizer, Member]
+
+    Venue:
+      type: object
+      required: [venueId, name, address, capacity, createdAt]
+      properties:
+        venueId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        address:
+          type: string
+          minLength: 1
+          maxLength: 500
+        capacity:
+          type: integer
+          minimum: 1
+          maximum: 999999
+        amenities:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            maxLength: 100
+        createdAt:
+          type: string
+          format: date-time
+
+    EventStatus:
+      type: string
+      enum: [Draft, Published, Open, In_Progress, Completed, Archived, Cancelled]
+
+    Event:
+      type: object
+      required: [eventId, orgId, title, status, startAt, endAt, timezone, capacity, createdAt]
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        orgId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/EventStatus"
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+          example: "Asia/Kolkata"
+        capacity:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        venueId:
+          type: string
+          format: uuid
+          nullable: true
+        meetingUrl:
+          type: string
+          format: uri
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    TicketStatus:
+      type: string
+      enum: [Confirmed, Waitlisted, Cancelled, CheckedIn]
+
+    Ticket:
+      type: object
+      required: [ticketId, eventId, orgId, ticketCode, status, createdAt]
+      properties:
+        ticketId:
+          type: string
+          format: uuid
+        eventId:
+          type: string
+          format: uuid
+        orgId:
+          type: string
+          format: uuid
+        ticketCode:
+          type: string
+          format: uuid
+        status:
+          $ref: "#/components/schemas/TicketStatus"
+        memberId:
+          type: string
+          format: uuid
+          nullable: true
+        guestEmail:
+          type: string
+          format: email
+          nullable: true
+        waitlistPosition:
+          type: integer
+          nullable: true
+        checkedInAt:
+          type: string
+          format: date-time
+          nullable: true
+        checkedInBy:
+          type: string
+          format: uuid
+          nullable: true
+        qrCodeUrl:
+          type: string
+          format: uri
+          description: Pre-signed S3 URL valid for 7 days
+        createdAt:
+          type: string
+          format: date-time
+
+    AuditLogEntry:
+      type: object
+      required: [timestamp, actor, targetType, targetId, operation, sourceIp, outcome, orgId]
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        actor:
+          type: string
+          description: memberId or "system"
+        targetType:
+          type: string
+        targetId:
+          type: string
+        operation:
+          type: string
+          example: "org.deactivate"
+        sourceIp:
+          type: string
+        outcome:
+          type: string
+          enum: [success, failure]
+        orgId:
+          type: string
+          format: uuid
+        metadata:
+          type: object
+          nullable: true
+
+    Notification:
+      type: object
+      required: [notificationId, memberId, type, message, read, createdAt]
+      properties:
+        notificationId:
+          type: string
+          format: uuid
+        memberId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [RSVP_CONFIRMATION, WAITLIST_PROMOTION, EVENT_CANCELLATION, REMINDER, CAPACITY_WARNING, ANNOUNCEMENT, REPORT_READY]
+        message:
+          type: string
+        read:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    Announcement:
+      type: object
+      required: [announcementId, orgId, subject, body, audienceType, createdAt]
+      properties:
+        announcementId:
+          type: string
+          format: uuid
+        orgId:
+          type: string
+          format: uuid
+        subject:
+          type: string
+        body:
+          type: string
+        audienceType:
+          type: string
+          enum: [AllMembers, EventAttendees, Role, Manual]
+        createdAt:
+          type: string
+          format: date-time
+
+    AnalyticsReport:
+      type: object
+      required: [eventId, orgId, reportStatus]
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        orgId:
+          type: string
+          format: uuid
+        reportStatus:
+          type: string
+          enum: [Pending, Ready, Failed]
+        attendanceRate:
+          type: number
+          format: float
+          nullable: true
+        checkInRate:
+          type: number
+          format: float
+          nullable: true
+        waitlistCount:
+          type: integer
+          nullable: true
+        cancellationCount:
+          type: integer
+          nullable: true
+        reportGeneratedAt:
+          type: string
+          format: date-time
+          nullable: true
+        csvDownloadUrl:
+          type: string
+          format: uri
+          nullable: true
+        pdfDownloadUrl:
+          type: string
+          format: uri
+          nullable: true
+
+    SentimentAnalysis:
+      type: object
+      required: [sentimentScore, positiveThemes, negativeThemes]
+      properties:
+        sentimentScore:
+          type: number
+          format: float
+          minimum: -1.0
+          maximum: 1.0
+        positiveThemes:
+          type: array
+          minItems: 3
+          maxItems: 3
+          items:
+            type: string
+        negativeThemes:
+          type: array
+          minItems: 3
+          maxItems: 3
+          items:
+            type: string
+
+    ScheduleSuggestion:
+      type: object
+      required: [dayOfWeek, timeSlot, predictedAttendance, reasoningFactors]
+      properties:
+        dayOfWeek:
+          type: string
+          enum: [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday]
+        timeSlot:
+          type: string
+          example: "14:00-16:00"
+        predictedAttendance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Predicted attendance percentage
+        reasoningFactors:
+          type: array
+          minItems: 2
+          items:
+            type: string
+
+  parameters:
+    orgId:
+      name: orgId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    eventId:
+      name: eventId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ticketId:
+      name: ticketId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    venueId:
+      name: venueId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    memberId:
+      name: memberId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    nextToken:
+      name: nextToken
+      in: query
+      required: false
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+paths:
+  # ── Auth ──────────────────────────────────────────────────────────────────
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new member account
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 12
+                  description: Must include uppercase, lowercase, digit, and special character
+      responses:
+        "201":
+          description: Registration successful – verification email sent
+        "409":
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/verify-email:
+    post:
+      tags: [Auth]
+      summary: Confirm email with verification code
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, code]
+              properties:
+                email:
+                  type: string
+                  format: email
+                code:
+                  type: string
+      responses:
+        "200":
+          description: Email verified
+        "400":
+          description: Invalid or expired code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate and receive tokens
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                totpCode:
+                  type: string
+                  description: Required when TOTP MFA is enabled
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                  idToken:
+                    type: string
+                  expiresIn:
+                    type: integer
+        "401":
+          description: Invalid credentials or TOTP code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Exchange refresh token for new access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        "200":
+          description: New tokens issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  idToken:
+                    type: string
+                  expiresIn:
+                    type: integer
+        "401":
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/forgot-password:
+    post:
+      tags: [Auth]
+      summary: Request a password reset link (valid 15 minutes)
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        "200":
+          description: Reset link sent if email exists (always 200 to prevent enumeration)
+
+  /auth/reset-password:
+    post:
+      tags: [Auth]
+      summary: Consume one-time reset token and set new password
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, newPassword]
+              properties:
+                token:
+                  type: string
+                newPassword:
+                  type: string
+                  minLength: 12
+      responses:
+        "200":
+          description: Password reset successful
+        "400":
+          description: Token expired or already used
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/mfa/enable:
+    put:
+      tags: [Auth]
+      summary: Enable TOTP MFA for the authenticated member
+      responses:
+        "200":
+          description: MFA enabled – returns TOTP secret and QR code data URI
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  secret:
+                    type: string
+                  qrDataUri:
+                    type: string
+
+  /auth/mfa/disable:
+    put:
+      tags: [Auth]
+      summary: Disable TOTP MFA for the authenticated member
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [totpCode]
+              properties:
+                totpCode:
+                  type: string
+      responses:
+        "200":
+          description: MFA disabled
+
+  # ── Orgs ──────────────────────────────────────────────────────────────────
+  /orgs:
+    post:
+      tags: [Orgs]
+      summary: Create a new organisation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, slug]
+              properties:
+                name:
+                  type: string
+                  minLength: 3
+                  maxLength: 100
+                slug:
+                  type: string
+                  minLength: 3
+                  maxLength: 63
+                  pattern: "^[a-z0-9-]+$"
+      responses:
+        "201":
+          description: Organisation created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+        "409":
+          description: Slug already taken
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    get:
+      tags: [Orgs]
+      summary: Get organisation details
+      responses:
+        "200":
+          description: Organisation details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+    put:
+      tags: [Orgs]
+      summary: Update organisation (Owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 3
+                  maxLength: 100
+      responses:
+        "200":
+          description: Organisation updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+
+  /orgs/{orgId}/deactivate:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Orgs]
+      summary: Deactivate organisation (Owner only)
+      responses:
+        "200":
+          description: Organisation deactivated
+
+  /orgs/{orgId}/transfer-ownership:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Orgs]
+      summary: Transfer ownership to another member (Owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [targetMemberId]
+              properties:
+                targetMemberId:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: Ownership transferred
+        "400":
+          description: Target is not a member of this org
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Members ───────────────────────────────────────────────────────────────
+  /orgs/{orgId}/members:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    get:
+      tags: [Members]
+      summary: List organisation members (paginated)
+      parameters:
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Paginated member list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Member"
+
+  /orgs/{orgId}/members/{memberId}/role:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/memberId"
+    put:
+      tags: [Members]
+      summary: Change member role (Admin+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role]
+              properties:
+                role:
+                  $ref: "#/components/schemas/OrgRole"
+      responses:
+        "200":
+          description: Role updated
+        "400":
+          description: Cannot demote sole Owner
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/members/{memberId}:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/memberId"
+    delete:
+      tags: [Members]
+      summary: Remove member from organisation (Admin+)
+      responses:
+        "204":
+          description: Member removed
+        "400":
+          description: Cannot remove sole Owner
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/invitations:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Members]
+      summary: Invite a member by email (Admin+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, role]
+              properties:
+                email:
+                  type: string
+                  format: email
+                role:
+                  $ref: "#/components/schemas/OrgRole"
+      responses:
+        "201":
+          description: Invitation sent
+        "409":
+          description: Member already active in org
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/invitations/bulk:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Members]
+      summary: Bulk invite via CSV upload (Admin+, max 500 rows)
+      requestBody:
+        required: true
+        content:
+          text/csv:
+            schema:
+              type: string
+              description: "CSV with columns: email, role"
+      responses:
+        "200":
+          description: Summary report of accepted and skipped entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accepted:
+                    type: integer
+                  skipped:
+                    type: integer
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        row:
+                          type: integer
+                        reason:
+                          type: string
+        "400":
+          description: File exceeds 500 rows or invalid format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/invitations/{invitationId}/accept:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - name: invitationId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [Members]
+      summary: Accept invitation by token (public endpoint)
+      security: []
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Invitation accepted
+        "400":
+          description: Token expired or already used
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Venues ────────────────────────────────────────────────────────────────
+  /orgs/{orgId}/venues:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Venues]
+      summary: Create a venue (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, address, capacity]
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 200
+                address:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+                capacity:
+                  type: integer
+                  minimum: 1
+                  maximum: 999999
+                amenities:
+                  type: array
+                  maxItems: 50
+                  items:
+                    type: string
+                    maxLength: 100
+      responses:
+        "201":
+          description: Venue created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Venue"
+    get:
+      tags: [Venues]
+      summary: List venues for organisation
+      parameters:
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Venue list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Venue"
+
+  /orgs/{orgId}/venues/{venueId}:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/venueId"
+    get:
+      tags: [Venues]
+      summary: Get venue details
+      responses:
+        "200":
+          description: Venue details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Venue"
+    put:
+      tags: [Venues]
+      summary: Update venue (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                capacity:
+                  type: integer
+                amenities:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Venue updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Venue"
+    delete:
+      tags: [Venues]
+      summary: Delete venue (Admin+) – rejected if used by any Published/Open event
+      responses:
+        "204":
+          description: Venue deleted
+        "409":
+          description: Venue in use by active events
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Events ────────────────────────────────────────────────────────────────
+  /orgs/{orgId}/events:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Events]
+      summary: Create an event in Draft status (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, startAt, endAt, timezone, capacity]
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 200
+                description:
+                  type: string
+                startAt:
+                  type: string
+                  format: date-time
+                endAt:
+                  type: string
+                  format: date-time
+                timezone:
+                  type: string
+                  example: "Asia/Kolkata"
+                capacity:
+                  type: integer
+                  minimum: 1
+                  maximum: 100000
+                venueId:
+                  type: string
+                  format: uuid
+                meetingUrl:
+                  type: string
+                  format: uri
+      responses:
+        "201":
+          description: Event created in Draft
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+    get:
+      tags: [Events]
+      summary: List events for organisation (paginated, filterable by status)
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/EventStatus"
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Paginated event list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Event"
+
+  /orgs/{orgId}/events/{eventId}:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    get:
+      tags: [Events]
+      summary: Get event details
+      responses:
+        "200":
+          description: Event details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+    put:
+      tags: [Events]
+      summary: Update event (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                startAt:
+                  type: string
+                  format: date-time
+                endAt:
+                  type: string
+                  format: date-time
+                timezone:
+                  type: string
+                capacity:
+                  type: integer
+                venueId:
+                  type: string
+                  format: uuid
+                meetingUrl:
+                  type: string
+                  format: uri
+      responses:
+        "200":
+          description: Event updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+    delete:
+      tags: [Events]
+      summary: Delete event (Admin+, Draft only)
+      responses:
+        "204":
+          description: Event deleted
+
+  /orgs/{orgId}/events/{eventId}/publish:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    post:
+      tags: [Events]
+      summary: Publish event (Organizer+) – triggers EventBridge rules and Publish Workflow
+      responses:
+        "200":
+          description: Event published
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "400":
+          description: Invalid state transition or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/events/{eventId}/cancel:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    post:
+      tags: [Events]
+      summary: Cancel event (Organizer+) – triggers Cancellation Workflow
+      responses:
+        "200":
+          description: Event cancelled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "400":
+          description: Invalid state transition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/events/{eventId}/transition:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    post:
+      tags: [Events]
+      summary: Admin manual state transition (Admin+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [targetStatus]
+              properties:
+                targetStatus:
+                  $ref: "#/components/schemas/EventStatus"
+      responses:
+        "200":
+          description: Transition applied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "400":
+          description: Invalid transition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/events/{eventId}/workflow-history:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    get:
+      tags: [Events]
+      summary: Get Step Functions execution history for this event
+      responses:
+        "200":
+          description: Workflow execution history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        executionArn:
+                          type: string
+                        stateMachineName:
+                          type: string
+                        status:
+                          type: string
+                        startDate:
+                          type: string
+                          format: date-time
+                        stopDate:
+                          type: string
+                          format: date-time
+                          nullable: true
+
+  # ── Tickets ───────────────────────────────────────────────────────────────
+  /orgs/{orgId}/events/{eventId}/tickets:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    post:
+      tags: [Tickets]
+      summary: RSVP to event – creates Confirmed or Waitlisted ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                guestEmail:
+                  type: string
+                  format: email
+                  description: Required for guest registration (non-member)
+                guestName:
+                  type: string
+      responses:
+        "201":
+          description: Ticket created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "409":
+          description: Duplicate registration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Event not accepting registrations or waitlist full
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags: [Tickets]
+      summary: List tickets for event (Organizer+, paginated)
+      parameters:
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Paginated ticket list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Ticket"
+
+  /orgs/{orgId}/events/{eventId}/tickets/{ticketId}:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+      - $ref: "#/components/parameters/ticketId"
+    get:
+      tags: [Tickets]
+      summary: Get ticket details (includes 7-day pre-signed QR URL)
+      responses:
+        "200":
+          description: Ticket details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+    delete:
+      tags: [Tickets]
+      summary: Cancel ticket
+      responses:
+        "204":
+          description: Ticket cancelled
+        "400":
+          description: Event is not in a cancellable state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/events/{eventId}/waitlist:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    get:
+      tags: [Tickets]
+      summary: List waitlisted tickets in position order (Organizer+)
+      parameters:
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Waitlisted tickets
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Ticket"
+
+  # ── Check-In ──────────────────────────────────────────────────────────────
+  /orgs/{orgId}/events/{eventId}/checkins:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    post:
+      tags: [CheckIn]
+      summary: Check in an attendee (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ticketCode]
+              properties:
+                ticketCode:
+                  type: string
+                  format: uuid
+                attendeeName:
+                  type: string
+                  description: Optional, used for manual check-in without QR scan
+      responses:
+        "200":
+          description: Check-in successful or duplicate (idempotent)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ticketId, checkedInAt, alreadyCheckedIn]
+                properties:
+                  ticketId:
+                    type: string
+                    format: uuid
+                  checkedInAt:
+                    type: string
+                    format: date-time
+                  alreadyCheckedIn:
+                    type: boolean
+                  checkedInBy:
+                    type: string
+                    format: uuid
+        "400":
+          description: Event is not In_Progress or ticket not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/events/{eventId}/checkins/stats:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    get:
+      tags: [CheckIn]
+      summary: Get check-in statistics (Organizer+)
+      responses:
+        "200":
+          description: Check-in statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [checkedInCount, capacity, percentage]
+                properties:
+                  checkedInCount:
+                    type: integer
+                  capacity:
+                    type: integer
+                  percentage:
+                    type: number
+                    format: float
+
+  # ── Notifications ─────────────────────────────────────────────────────────
+  /me/notifications:
+    get:
+      tags: [Notifications]
+      summary: List in-app notifications for authenticated member
+      parameters:
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Paginated notification list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Notification"
+                      unreadCount:
+                        type: integer
+
+  /me/notifications/{notificationId}/read:
+    parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      tags: [Notifications]
+      summary: Mark notification as read
+      responses:
+        "200":
+          description: Notification marked as read
+
+  /orgs/{orgId}/notifications/opt-out:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    put:
+      tags: [Notifications]
+      summary: Toggle email notification opt-out for this org
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [optOut]
+              properties:
+                optOut:
+                  type: boolean
+      responses:
+        "200":
+          description: Opt-out preference updated
+
+  # ── Announcements ─────────────────────────────────────────────────────────
+  /orgs/{orgId}/announcements:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Announcements]
+      summary: Send announcement to target audience (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [subject, body, audienceType]
+              properties:
+                subject:
+                  type: string
+                body:
+                  type: string
+                audienceType:
+                  type: string
+                  enum: [AllMembers, EventAttendees, Role, Manual]
+                targetEventId:
+                  type: string
+                  format: uuid
+                  description: Required when audienceType is EventAttendees
+                targetRole:
+                  $ref: "#/components/schemas/OrgRole"
+                targetMemberIds:
+                  type: array
+                  maxItems: 500
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        "201":
+          description: Announcement queued for delivery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Announcement"
+    get:
+      tags: [Announcements]
+      summary: List announcements (Organizer+, paginated)
+      parameters:
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Paginated announcement list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Announcement"
+
+  # ── Analytics ─────────────────────────────────────────────────────────────
+  /orgs/{orgId}/events/{eventId}/analytics:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    get:
+      tags: [Analytics]
+      summary: Get analytics report for event (Organizer for own events, Admin for all)
+      responses:
+        "200":
+          description: Analytics report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsReport"
+
+  /orgs/{orgId}/events/{eventId}/analytics/export:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+    get:
+      tags: [Analytics]
+      summary: Get pre-signed download URL for analytics export (Admin+)
+      parameters:
+        - name: format
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [csv, pdf]
+      responses:
+        "200":
+          description: Pre-signed download URL (valid 24 hours)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  downloadUrl:
+                    type: string
+                    format: uri
+                  expiresAt:
+                    type: string
+                    format: date-time
+
+  /orgs/{orgId}/analytics/trend-report:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [Analytics]
+      summary: Generate trend report (Admin+) – sync for ≤100 events, async otherwise
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dateFrom, dateTo]
+              properties:
+                dateFrom:
+                  type: string
+                  format: date-time
+                dateTo:
+                  type: string
+                  format: date-time
+      responses:
+        "200":
+          description: Synchronous result (≤100 events)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsReport"
+        "202":
+          description: Async job accepted (>100 events)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobId:
+                    type: string
+                    format: uuid
+                  status:
+                    type: string
+                    enum: [Pending]
+
+  /orgs/{orgId}/analytics/trend-report/{reportId}:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Analytics]
+      summary: Poll trend report status (Admin+)
+      responses:
+        "200":
+          description: Report status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsReport"
+
+  # ── AI ────────────────────────────────────────────────────────────────────
+  /orgs/{orgId}/ai/describe-event:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [AI]
+      summary: Generate event description via Bedrock (Organizer+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, keywords, targetAudience]
+              properties:
+                title:
+                  type: string
+                keywords:
+                  type: array
+                  items:
+                    type: string
+                targetAudience:
+                  type: string
+      responses:
+        "200":
+          description: Generated description draft (100–500 words)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                  wordCount:
+                    type: integer
+        "503":
+          description: Bedrock circuit breaker open or service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/ai/suggest-schedule:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [AI]
+      summary: Get AI scheduling suggestions (Organizer+, requires ≥5 completed events)
+      responses:
+        "200":
+          description: 1–5 scheduling suggestions sorted by predicted attendance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  suggestions:
+                    type: array
+                    minItems: 1
+                    maxItems: 5
+                    items:
+                      $ref: "#/components/schemas/ScheduleSuggestion"
+                  insufficientData:
+                    type: boolean
+        "503":
+          description: Bedrock circuit breaker open
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/ai/analyze-sentiment:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    post:
+      tags: [AI]
+      summary: Analyze event feedback sentiment (Admin+)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [eventId]
+              properties:
+                eventId:
+                  type: string
+                  format: uuid
+      responses:
+        "200":
+          description: Sentiment analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SentimentAnalysis"
+        "400":
+          description: Fewer than 3 feedback entries available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: Bedrock circuit breaker open
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  # ── Calendar ──────────────────────────────────────────────────────────────
+  /orgs/{orgId}/events/{eventId}/tickets/{ticketId}/ical:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+      - $ref: "#/components/parameters/eventId"
+      - $ref: "#/components/parameters/ticketId"
+    get:
+      tags: [Calendar]
+      summary: Download RFC 5545-compliant iCalendar (.ics) file for ticket
+      responses:
+        "200":
+          description: iCalendar file
+          content:
+            text/calendar:
+              schema:
+                type: string
+                format: binary
+
+  # ── Data Privacy ──────────────────────────────────────────────────────────
+  /me/data-export:
+    post:
+      tags: [DataPrivacy]
+      summary: Request personal data export (GDPR) – returns pre-signed URL within 24h
+      responses:
+        "202":
+          description: Data export request accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    format: uuid
+                  estimatedReadyAt:
+                    type: string
+                    format: date-time
+
+  /me/account:
+    delete:
+      tags: [DataPrivacy]
+      summary: Delete member account – PII anonymized within 30 days
+      responses:
+        "204":
+          description: Account deletion initiated
+        "400":
+          description: Member is sole Owner of one or more organisations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orgs/{orgId}/admin/member-data-map:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    get:
+      tags: [DataPrivacy]
+      summary: Get all DynamoDB and S3 keys for a member (Admin+)
+      parameters:
+        - name: memberId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Member data map
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dynamoKeys:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        table:
+                          type: string
+                        pk:
+                          type: string
+                        sk:
+                          type: string
+                  s3Keys:
+                    type: array
+                    items:
+                      type: string
+
+  # ── Audit Log ─────────────────────────────────────────────────────────────
+  /orgs/{orgId}/audit-log:
+    parameters:
+      - $ref: "#/components/parameters/orgId"
+    get:
+      tags: [AuditLog]
+      summary: List audit log entries (Admin+, max 100/page)
+      parameters:
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: actor
+          in: query
+          schema:
+            type: string
+        - name: operation
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/nextToken"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Paginated audit log entries
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/AuditLogEntry"
+
+  # ── WebSocket ─────────────────────────────────────────────────────────────
+  /ws/connect:
+    get:
+      tags: [WebSocket]
+      summary: |
+        WebSocket $connect route. Clients connect to the WebSocket API Gateway URL
+        with ?token=<accessToken>. On connect the JWT is validated and the connection
+        is stored in clois-ws-connections.
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "101":
+          description: WebSocket handshake successful
+        "401":
+          description: Invalid or expired JWT
+
+  /ws/disconnect:
+    get:
+      tags: [WebSocket]
+      summary: |
+        WebSocket $disconnect route. Connection record is removed from
+        clois-ws-connections on disconnect.
+      responses:
+        "200":
+          description: Disconnected
+
+tags:
+  - name: Auth
+    description: Authentication and MFA endpoints (public, no JWT required)
+  - name: Orgs
+    description: Organisation CRUD and lifecycle management
+  - name: Members
+    description: Member invitations and role management
+  - name: Venues
+    description: Venue CRUD
+  - name: Events
+    description: Event lifecycle management
+  - name: Tickets
+    description: RSVP, ticketing, and waitlist
+  - name: CheckIn
+    description: Attendee check-in and statistics
+  - name: Notifications
+    description: In-app notifications and email opt-out
+  - name: Announcements
+    description: Org announcements
+  - name: Analytics
+    description: Event analytics, trend reports, and exports
+  - name: AI
+    description: Bedrock-powered AI features (circuit-breaker protected)
+  - name: Calendar
+    description: iCalendar export
+  - name: DataPrivacy
+    description: GDPR data export and account deletion
+  - name: AuditLog
+    description: Immutable audit log queries (Admin+)
+  - name: WebSocket
+    description: Real-time WebSocket connection management
