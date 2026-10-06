@@ -480,8 +480,9 @@ export async function analyzeSentiment(
  * Used by Property 20 tests.
  */
 export function containsPII(prompt: string): boolean {
-  // Email pattern
-  if (/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/.test(prompt)) return true;
+  // Email pattern — broad match: any non-whitespace chars @ domain with TLD
+  // Uses a permissive local-part pattern to catch RFC 5321 edge cases (e.g. &@a.aa)
+  if (/\S+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/.test(prompt)) return true;
   // UUID member ID pattern
   if (/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(prompt)) return true;
   return false;
