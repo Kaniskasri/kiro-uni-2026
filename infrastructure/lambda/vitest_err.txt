@@ -1,0 +1,158 @@
+[31m⎯⎯⎯⎯⎯⎯⎯[1m[7m Failed Tests 4 [27m[22m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-2: Email addresses are always detected as PII
+[31m[1mError[22m: Property failed after 2 tests
+{ seed: 978699179, path: "1:0:3:0:0:0:1:1:1", endOnFailure: true }
+Counterexample: ["!@a.aa"]
+Shrunk 8 time(s)
+Got AssertionError: expected false to be true // Object.is equality
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:83:36
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:81:8
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:781:17)
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+[36m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m83:36[22m[39m
+    [90m 81| [39m    fc[33m.[39m[34massert[39m(
+    [90m 82| [39m      fc[33m.[39m[34mproperty[39m(emailArb[33m,[39m (email) [33m=>[39m {
+    [90m 83| [39m        [34mexpect[39m([34mcontainsPII[39m(email))[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                                   [31m^[39m
+    [90m 84| [39m      })[33m,[39m
+    [90m 85| [39m      { numRuns[33m:[39m [34m100[39m }[33m,[39m
+[90m [2m❯[22m Property.predicate node_modules/fast-check/lib/esm/check/property/Property.js:[2m14:54[22m[39m
+[90m [2m❯[22m Property.run node_modules/fast-check/lib/esm/check/property/Property.generic.js:[2m46:33[22m[39m
+[90m [2m❯[22m runIt node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m18:30[22m[39m
+[90m [2m❯[22m check node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m62:11[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m65:17[22m[39m
+[90m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m81:8[22m[39m
+[90m [2m❯[22m buildError node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m126:15[22m[39m
+[90m [2m❯[22m throwIfFailed node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m138:11[22m[39m
+[90m [2m❯[22m reportRunDetails node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m151:16[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m69:9[22m[39m
+[90m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m81:8[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-4: Prompt with embedded email is detected as containing PII
+[31m[1mError[22m: Property failed after 1 tests
+{ seed: 1807132144, path: "0:0:2:1:0:1:1:1:1:1:1:1:1:1:1:1:1", endOnFailure: true }
+Counterexample: ["!@a.aa","!"]
+Shrunk 16 time(s)
+Got AssertionError: expected false to be true // Object.is equality
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:102:44
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:99:8
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:781:17)
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+[36m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m102:44[22m[39m
+    [90m100| [39m      fc[33m.[39m[34mproperty[39m(emailArb[33m,[39m cleanTitleArb[33m,[39m (email[33m,[39m title) [33m=>[39m {
+    [90m101| [39m        [35mconst[39m promptWithPII [33m=[39m [32m`Event for [39m[36m${[39memail[36m}[39m[32m titled [39m[36m${[39mtitle[36m}[39m[32m`[39m[33m;[39m
+    [90m102| [39m        [34mexpect[39m([34mcontainsPII[39m(promptWithPII))[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                                           [31m^[39m
+    [90m103| [39m      })[33m,[39m
+    [90m104| [39m      { numRuns[33m:[39m [34m100[39m }[33m,[39m
+[90m [2m❯[22m Property.predicate node_modules/fast-check/lib/esm/check/property/Property.js:[2m14:54[22m[39m
+[90m [2m❯[22m Property.run node_modules/fast-check/lib/esm/check/property/Property.generic.js:[2m46:33[22m[39m
+[90m [2m❯[22m runIt node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m18:30[22m[39m
+[90m [2m❯[22m check node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m62:11[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m65:17[22m[39m
+[90m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m99:8[22m[39m
+[90m [2m❯[22m buildError node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m126:15[22m[39m
+[90m [2m❯[22m throwIfFailed node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m138:11[22m[39m
+[90m [2m❯[22m reportRunDetails node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m151:16[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m69:9[22m[39m
+[90m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m99:8[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 21: AI Response Validation Rejection[2m > [22mP21-2: Response with > 500 words is always rejected
+[31m[1mError[22m[39m: Property failed after 91 tests
+{ seed: -1327007862, path: "90:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:2:1:0:0:1:1:0:0:0:0:0:0:2:0:0:0:0:0:5:2:2:2:2:5:4:3:3:3:3:3:3:4:1:0:0:0:0:0:0:1:1:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:2:0:0:0:0:0:1:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:2:0:0:0:1:1:1:1:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:2:0:0:0:0:0:0:2:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:1:1:0:0:0:0:0:2:0:0:0:1:1:0:0:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:2:0:0:0:0:2:2:1:1:1:1:1:2:1:0:0:0:0:0:0:2:0:0:2:0:0:0:0:2:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:2:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:2:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:2:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:2:2:1:1:1:1:1:4:4:1:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:2:2:0:0:0:0:0:1:1:0:0:0:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:2:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:2:0:0:0:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0", endOnFailure: true }
+Counterexample: [[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","!","!","!","!","!","!","!","!","!","!","! !","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","! ","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","! !","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!"," ","!","!","!"]]
+Shrunk 1342 time(s)
+Got AssertionError: expected true to be false // Object.is equality
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:163:53
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:158:8
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:781:17)
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run
+[36m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m163:53[22m[39m
+    [90m161| [39m        (words) [33m=>[39m {
+    [90m162| [39m          [35mconst[39m text [33m=[39m words[33m.[39m[34mjoin[39m([32m' '[39m)[33m;[39m
+    [90m163| [39m          [34mexpect[39m([34mvalidateDescriptionResponse[39m(text))[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m   | [39m                                                    [31m^[39m
+    [90m164| [39m        }[33m,[39m
+    [90m165| [39m      )[33m,[39m
+[90m [2m❯[22m Property.predicate node_modules/fast-check/lib/esm/check/property/Property.js:[2m14:54[22m[39m
+[90m [2m❯[22m Property.run node_modules/fast-check/lib/esm/check/property/Property.generic.js:[2m46:33[22m[39m
+[90m [2m❯[22m runIt node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m18:30[22m[39m
+[90m [2m❯[22m check node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m62:11[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m65:17[22m[39m
+[90m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m158:8[22m[39m
+[90m [2m❯[22m buildError node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m126:15[22m[39m
+[90m [2m❯[22m throwIfFailed node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m138:11[22m[39m
+[90m [2m❯[22m reportRunDetails node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m151:16[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m69:9[22m[39m
+[90m [2m❯[22m src/__tests__/properties/ai.property.test.ts:[2m158:8[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-5: Valid event title [1, 200] chars is always accepted
+[31m[1mError[22m: Property failed after 53 tests
+{ seed: 502069347, path: "52", endOnFailure: true }
+Counterexample: [" "]
+Shrunk 0 time(s)
+Got AssertionError: expected [Function] to not throw an error but 'Error: Event title must be between 1 …' was thrown
+    at Proxy.<anonymous> (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/expect/dist/index.js:1324:19)
+    at Proxy.<anonymous> (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/expect/dist/index.js:800:17)
+    at Proxy.methodWrapper (C:\kiro-uni-2026\infrastructure\lambda\node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\events.property.test.ts:183:53
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\events.property.test.ts:181:8
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+[36m [2m❯[22m src/__tests__/properties/events.property.test.ts:[2m183:53[22m[39m
+    [90m181| [39m    fc[33m.[39m[34massert[39m(
+    [90m182| [39m      fc[33m.[39m[34mproperty[39m(validTitleArb[33m,[39m (title) [33m=>[39m {
+    [90m183| [39m        [34mexpect[39m(() [33m=>[39m [34mvalidateEventTitle[39m(title))[33m.[39mnot[33m.[39m[34mtoThrow[39m()[33m;[39m
+    [90m   | [39m                                                    [31m^[39m
+    [90m184| [39m      })[33m,[39m
+    [90m185| [39m      { numRuns[33m:[39m [34m100[39m }[33m,[39m
+[90m [2m❯[22m Property.predicate node_modules/fast-check/lib/esm/check/property/Property.js:[2m14:54[22m[39m
+[90m [2m❯[22m Property.run node_modules/fast-check/lib/esm/check/property/Property.generic.js:[2m46:33[22m[39m
+[90m [2m❯[22m runIt node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m18:30[22m[39m
+[90m [2m❯[22m check node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m62:11[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m65:17[22m[39m
+[90m [2m❯[22m src/__tests__/properties/events.property.test.ts:[2m181:8[22m[39m
+[90m [2m❯[22m buildError node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m126:15[22m[39m
+[90m [2m❯[22m throwIfFailed node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m138:11[22m[39m
+[90m [2m❯[22m reportRunDetails node_modules/fast-check/lib/esm/check/runner/utils/RunDetailsFormatter.js:[2m151:16[22m[39m
+[90m [2m❯[22m Proxy.assert node_modules/fast-check/lib/esm/check/runner/Runner.js:[2m69:9[22m[39m
+[90m [2m❯[22m src/__tests__/properties/events.property.test.ts:[2m181:8[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯[22m[39m
+

@@ -1,0 +1,290 @@
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.0[39m [90mC:/kiro-uni-2026/infrastructure/lambda[39m
+
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-1: Any CloudEvent serialized to JSON and back is semantically equivalent
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-2: Nested data payload survives round-trip without field loss
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-3: No type coercion — numbers remain numbers, strings remain strings
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-4: Serialized event is valid JSON and always parseable
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-5: Double serialization is idempotent
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-6: CloudEvent type always starts with "com.clois.v1."
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-7: CloudEvent source always starts with "clois/"
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 26: Domain Event Serialization Round-Trip[2m > [22mP26-8: time field always deserializes to a valid Date
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-1: HTTP status codes are always in the valid set [200,201,204,400,401,403,404,409,500]
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-2: Success responses always use 200, 201, or 204
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-3: Client error responses always use 400, 401, 403, 404, or 409
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-4: Server error responses always use 500
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-5: Error middleware always returns 500 for unhandled exceptions
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-6: Cross-org access always returns 403, never 404
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-7: Invalid state transition always returns 400
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 24: HTTP Status Code Mapping Invariant[2m > [22mP24-8: buildErrorResponse always returns a status code in the valid set
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-1: All error responses always have errorCode, message, and correlationId
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-2: errorCode is always a non-empty string
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-3: message is always a string of at most 500 characters
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-4: correlationId is always a non-empty string
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-5: buildErrorResponse always truncates message to 500 chars
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-6: message does not contain implementation details (stack traces)
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-7: errorCode always follows domain.error_type format
+ [32m✓[39m src/__tests__/properties/api.property.test.ts[2m > [22mProperty 25: Error Response Structure Completeness[2m > [22mP25-8: Error responses are always JSON-serializable without loss
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-1: Successful publish always results in Published status + 2 EventBridge rules
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-2: Failed publish with revert always results in Draft status + 0 rules
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-3: Partial state (Published + 0 rules) is never a valid final state
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-4: Partial state (Published + only 1 rule) is never a valid final state
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-5: Draft status with any rules is not a valid state
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-6: After any outcome (success or fail), state is always one of the two valid states
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-7: Non-Draft events cannot be published (idempotency guard)
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-8: EventBridge rule names always contain orgId and eventId for uniqueness
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-9: Publish result always has exactly a T-start and T-end rule
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 18: Event Publish Atomicity[2m > [22mP18-10: Valid states are exactly { Draft+0 rules } or { Published+2 rules } — no others
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-1: STANDARD_RETRY always has IntervalSeconds=5
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-2: STANDARD_RETRY always has MaxAttempts=3
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-3: STANDARD_RETRY always has BackoffRate=2.0
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-4: STANDARD_RETRY covers all transient Lambda error types
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-5: A correctly structured retry config always passes validation
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-6: A misconfigured retry config (wrong interval) always fails validation
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-7: A misconfigured retry config (wrong maxAttempts) always fails validation
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-8: A misconfigured retry config (wrong backoffRate) always fails validation
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-9: Retry config is structurally complete — no missing fields
+ [32m✓[39m src/__tests__/properties/workflows.property.test.ts[2m > [22mProperty 19: Retry Semantics Correctness[2m > [22mP19-10: All retry configs across all workflows are identical (deterministic)
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 10: Ticket Code Uniqueness[2m > [22mP10-1: Any N generated ticketCodes are all unique UUIDs
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 10: Ticket Code Uniqueness[2m > [22mP10-2: Each ticketCode matches the UUID v4 format
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 10: Ticket Code Uniqueness[2m > [22mP10-3: Two independently generated ticketCodes for the same event are always different
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 11: Event Capacity Invariant - confirmedCount never exceeds capacity[2m > [22mP11-1: When confirmedCount < capacity, new RSVP is always Confirmed
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 11: Event Capacity Invariant - confirmedCount never exceeds capacity[2m > [22mP11-2: Tickets beyond capacity are always Waitlisted, never Confirmed
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 11: Event Capacity Invariant - confirmedCount never exceeds capacity[2m > [22mP11-3: confirmedCount never exceeds capacity after any number of RSVPs
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 11: Event Capacity Invariant - confirmedCount never exceeds capacity[2m > [22mP11-4: Waitlist rejects registrations when waitlist is full (>= 100)
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 12: Waitlist Promotion FIFO Invariant[2m > [22mP12-1: When a Confirmed ticket is cancelled, the lowest waitlistPosition is always promoted
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 12: Waitlist Promotion FIFO Invariant[2m > [22mP12-2: cancelling a Waitlisted ticket does NOT trigger promotion
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 12: Waitlist Promotion FIFO Invariant[2m > [22mP12-3: After promotion, confirmedCount remains <= capacity
+ [32m✓[39m src/__tests__/properties/tickets.property.test.ts[2m > [22mProperty 12: Waitlist Promotion FIFO Invariant[2m > [22mP12-4: FIFO order is preserved across multiple cancellations
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-1: 100 generated tokens are all statistically unique (no collisions)
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-2: for any two independently generated tokens, they must be distinct
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-3: token hash is always a 64-character hex string (SHA-256 output)
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-4: token expiry is always exactly 72 hours after creation
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-5: an expired token (check time > 72h after creation) is always rejected
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-6: a token checked before or at expiry time is not expired
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-7: a used token (status != Pending) is always rejected regardless of expiry
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 5: Invitation Token Uniqueness[2m > [22mP5-8: SHA-256 hash of same raw token always produces the same 64-char hex hash
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-1: for any CSV with N valid rows (N <= 500), accepted + skipped always equals N
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-2: any row with an invalid email format is always in the skipped list
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-3: any row with an invalid role is always in the skipped list
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-4: CSV with more than 500 rows is entirely rejected with an error (no partial processing)[33m 950[2mms[22m[39m
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-5: empty CSV returns accepted=0, skipped=[] with no error
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-5 (property): empty array always produces zero accepted and zero skipped
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-6: duplicate emails within the same batch — second occurrence is always skipped with reason "duplicate"
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-7: valid rows always appear in accepted list, never in skipped
+ [32m✓[39m src/__tests__/properties/members.property.test.ts[2m > [22mProperty 6: Bulk CSV Invitation Processing Correctness[2m > [22mP6-8: a row with Owner role is always skipped (Owner is not a valid invitation role)
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22ma member with optedOut=true never has email sent, regardless of notification type
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22ma member with optedOut=false does have email dispatched for any notification type
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22mopt-out state is org-scoped: opted out of Org A does not suppress emails for Org B
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22mopt-out suppression is idempotent: calling opt-out twice yields the same suppression result
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mAllMembers: every org member appears in enqueue list exactly once
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mEventAttendees: every confirmed attendee appears exactly once
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mRole: only members with matching role are targeted, no duplicates
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mManual: exactly the specified members are targeted (deduplicated), no extras
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22menqueue count always matches resolved audience size (no over- or under-enqueue)
+ [32m✓[39m src/__tests__/properties/checkin.property.test.ts[2m > [22mProperty 15: Check-In Idempotency[2m > [22mP15-1: Re-checking in an already-CheckedIn ticket always returns the original checkedInAt[33m 553[2mms[22m[39m
+ [32m✓[39m src/__tests__/properties/checkin.property.test.ts[2m > [22mProperty 15: Check-In Idempotency[2m > [22mP15-2: First check-in always sets checkedInAt to a valid ISO 8601 UTC timestamp
+ [32m✓[39m src/__tests__/properties/checkin.property.test.ts[2m > [22mProperty 15: Check-In Idempotency[2m > [22mP15-3: Check-in on non-In_Progress event always rejected with HTTP 400
+ [32m✓[39m src/__tests__/properties/checkin.property.test.ts[2m > [22mProperty 15: Check-In Idempotency[2m > [22mP15-4: Check-in with invalid ticketCode always rejected with HTTP 404
+ [32m✓[39m src/__tests__/properties/checkin.property.test.ts[2m > [22mProperty 15: Check-In Idempotency[2m > [22mP15-5: Second concurrent check-in of same ticket always returns alreadyCheckedIn=true
+ [32m✓[39m src/__tests__/properties/checkin.property.test.ts[2m > [22mProperty 15: Check-In Idempotency[2m > [22mP15-6: checkedInBy always equals the memberId from the JWT context
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-1: Any valid entry always contains all 7 required fields
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-2: timestamp is always a valid UTC ISO 8601 string
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-3: actor is always either "system" or a non-empty string (memberId)
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-4: outcome is always exactly "success" or "failure"
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-5: targetType, targetId, operation, sourceIp are always non-empty strings
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-6: No required field is missing regardless of optional metadata presence
+ [32m✓[39m src/__tests__/properties/auditlog.property.test.ts[2m > [22mProperty 30: Audit Log Entry Completeness[2m > [22mP30-7: All known audit operations produce entries with all required fields
+ [32m✓[39m src/__tests__/properties/authorizer.property.test.ts[2m > [22mProperty 2: JWT Authorizer Rejects All Invalid Tokens[2m > [22mrejects empty token strings
+ [32m✓[39m src/__tests__/properties/authorizer.property.test.ts[2m > [22mProperty 2: JWT Authorizer Rejects All Invalid Tokens[2m > [22mrejects arbitrary non-JWT strings
+ [32m✓[39m src/__tests__/properties/authorizer.property.test.ts[2m > [22mProperty 2: JWT Authorizer Rejects All Invalid Tokens[2m > [22mrejects JWTs missing required sub claim
+ [32m✓[39m src/__tests__/properties/authorizer.property.test.ts[2m > [22mProperty 2: JWT Authorizer Rejects All Invalid Tokens[2m > [22mrejects JWTs with token_use !== access
+ [32m✓[39m src/__tests__/properties/authorizer.property.test.ts[2m > [22mProperty 2: JWT Authorizer Rejects All Invalid Tokens[2m > [22mnever returns allow for tokens that throw during verification
+ [32m✓[39m src/__tests__/properties/authorizer.property.test.ts[2m > [22mProperty 2: JWT Authorizer Rejects All Invalid Tokens[2m > [22mvalid token with no org membership returns deny (never allow or unauthorized)
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-1: Output always contains DTSTART with TZID
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-2: Output always contains DTEND with TZID
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-3: Output always contains SUMMARY field
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-4: SUMMARY value matches the event title
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-5: Output always contains valid UID field
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-6: DTSTART value is in RFC 5545 local datetime format (YYYYMMDDTHHmmSS)
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-7: Output always wraps in BEGIN:VCALENDAR / END:VCALENDAR
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-8: DESCRIPTION field is included when provided
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-9: LOCATION field is included when provided
+ [32m✓[39m src/__tests__/properties/calendar.property.test.ts[2m > [22mProperty 28: iCalendar Export Field Fidelity[2m > [22mP28-10: Valid TZID values are preserved in DTSTART and DTEND
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-1: CLOSED → OPEN after exactly 5 consecutive failures within 60s window
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-2: OPEN → HALF_OPEN after 120 seconds
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-3: HALF_OPEN → CLOSED on success
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-4: HALF_OPEN → OPEN on failure
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-5: Failures reset when outside the 60s window
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-6: Circuit stays OPEN for full 120 seconds
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-7: recordSuccess always resets failureCount to 0
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-8: State transitions are deterministic
+ [32m✓[39m src/__tests__/properties/circuitbreaker.property.test.ts[2m > [22mProperty 29: Circuit Breaker State Transitions[2m > [22mP29-9: CLOSED state allows execution without error
+ [32m✓[39m src/__tests__/properties/auth.property.test.ts[2m > [22mProperty 1: Password Validation Completeness[2m > [22mevery valid password satisfies all 5 constraints
+ [32m✓[39m src/__tests__/properties/auth.property.test.ts[2m > [22mProperty 1: Password Validation Completeness[2m > [22mpasswords shorter than 12 characters are always rejected
+ [32m✓[39m src/__tests__/properties/auth.property.test.ts[2m > [22mProperty 1: Password Validation Completeness[2m > [22mpasswords missing uppercase are rejected regardless of other complexity
+ [32m✓[39m src/__tests__/properties/auth.property.test.ts[2m > [22mProperty 1: Password Validation Completeness[2m > [22mpasswords missing lowercase are rejected
+ [32m✓[39m src/__tests__/properties/auth.property.test.ts[2m > [22mProperty 1: Password Validation Completeness[2m > [22mpasswords missing digits are rejected
+ [32m✓[39m src/__tests__/properties/auth.property.test.ts[2m > [22mProperty 1: Password Validation Completeness[2m > [22mpasswords missing special characters are rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-1: same slug (case-insensitive) from two org creation requests must always conflict
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-2: valid slugs pass validateSlug without throwing
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-3a: slugs shorter than 3 characters are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-3b: slugs longer than 63 characters are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-3c: slugs with uppercase letters are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-3d: slugs with special characters (not alphanumeric or hyphen) are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-3e: slugs with leading hyphens are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-3f: slugs with trailing hyphens are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-4a: valid org names (3–100 chars) pass validateOrgName without throwing
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-4b: org names shorter than 3 chars are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-4c: org names longer than 100 chars are always rejected
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 3: Organization Slug and Name Uniqueness Invariant[2m > [22mP3-5: slug normalisation is idempotent — valid slug equals its normalized form
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 4: Cross-Tenant Isolation (403 on Cross-Org Access)[2m > [22mP4-1: any JWT orgId differing from resource orgId must produce HTTP 403
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 4: Cross-Tenant Isolation (403 on Cross-Org Access)[2m > [22mP4-2: body orgId is ignored — tenantId from JWT is the only authority
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 4: Cross-Tenant Isolation (403 on Cross-Org Access)[2m > [22mP4-3: cross-org access NEVER returns 404 — always 403
+ [32m✓[39m src/__tests__/properties/orgs.property.test.ts[2m > [22mProperty 4: Cross-Tenant Isolation (403 on Cross-Org Access)[2m > [22mP4-4: same orgId in JWT and resource always grants access (200)
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-1: Event capacity never exceeds venue capacity when a venue is assigned
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-2: Capacity override attempt always rejected with 400 when venue is assigned
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-3: Virtual events with no venue assigned have no capacity constraint from venue
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-4: Venue capacity must be within [1, 999999] range — valid values always accepted
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-4b: Venue capacity outside [1, 999999] is always rejected
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-5: Venue name within [1, 200] chars is always accepted
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-5b: Venue name outside [1, 200] chars is always rejected
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-6: Amenities count <= 50 is always accepted
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-6b: Amenities count > 50 is always rejected
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-6c: Amenity item exceeding 100 chars is always rejected
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-7: Valid venue address [1, 500] chars is always accepted
+ [32m✓[39m src/__tests__/properties/venues.property.test.ts[2m > [22mProperty 9: Venue Capacity Override Enforcement[2m > [22mP9-7b: Venue address outside [1, 500] chars is always rejected
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 17: Report Generation Sync vs Async Routing[2m > [22mP17-1: eventCount <= 100 always routes synchronously
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 17: Report Generation Sync vs Async Routing[2m > [22mP17-2: eventCount > 100 always routes asynchronously
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 17: Report Generation Sync vs Async Routing[2m > [22mP17-3: Boundary at exactly 100 is synchronous
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 17: Report Generation Sync vs Async Routing[2m > [22mP17-4: Boundary at exactly 101 is asynchronous
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 17: Report Generation Sync vs Async Routing[2m > [22mP17-5: Routing is deterministic for any count
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 27: CSV Export Round-Trip[2m > [22mP27-1: serialize then parse returns same field values
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 27: CSV Export Round-Trip[2m > [22mP27-2: fields with commas are properly escaped and round-trip correctly
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 27: CSV Export Round-Trip[2m > [22mP27-3: fields with double quotes are properly escaped and round-trip correctly
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 27: CSV Export Round-Trip[2m > [22mP27-4: header row always present and matches input headers
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 27: CSV Export Round-Trip[2m > [22mP27-5: empty value fields round-trip as empty strings
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 16: Dashboard Metric Calculation Correctness[2m > [22mP16-1: Attendance rate = checkedIn / confirmed * 100, always in [0, 100]
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 16: Dashboard Metric Calculation Correctness[2m > [22mP16-2: Attendance rate is 0 when confirmed is 0
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 16: Dashboard Metric Calculation Correctness[2m > [22mP16-3: Attendance rate is 100 when all confirmed are checked in
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 16: Dashboard Metric Calculation Correctness[2m > [22mP16-4: Check-in rate never exceeds 100% regardless of input
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 16: Dashboard Metric Calculation Correctness[2m > [22mP16-5: Attendance rate increases monotonically as checkedIn increases
+ [32m✓[39m src/__tests__/properties/analytics.property.test.ts[2m > [22mProperty 16: Dashboard Metric Calculation Correctness[2m > [22mP16-6: Metric calculation is deterministic
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-1: Any event where endAt <= startAt is always rejected with 400
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-1b: endAt strictly before startAt is always rejected
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-2: Any event where endAt > startAt is always accepted (datetime-wise)
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-3: Valid IANA timezone identifiers are always accepted
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-3b: Invalid timezone strings are always rejected
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-4: Valid UTC ISO 8601 datetime strings are always accepted
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-4b: Invalid datetime strings are always rejected
+ [31m×[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-5: Valid event title [1, 200] chars is always accepted
+[31m   → Property failed after 53 tests
+{ seed: 502069347, path: "52", endOnFailure: true }
+Counterexample: [" "]
+Shrunk 0 time(s)
+Got AssertionError: expected [Function] to not throw an error but 'Error: Event title must be between 1 …' was thrown
+    at Proxy.<anonymous> (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/expect/dist/index.js:1324:19)
+    at Proxy.<anonymous> (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/expect/dist/index.js:800:17)
+    at Proxy.methodWrapper (C:\kiro-uni-2026\infrastructure\lambda\node_modules\chai\lib\chai\utils\addMethod.js:57:25)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\events.property.test.ts:183:53
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\events.property.test.ts:181:8
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-5b: Event title outside [1, 200] chars is always rejected
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-6: Valid event capacity [1, 100000] is always accepted
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 7: Event Datetime Validation Invariant[2m > [22mP7-6b: Event capacity outside [1, 100000] is always rejected
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-1: Only valid transitions succeed
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-2: Invalid transitions always return error
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-3: Cancelled is always a terminal state — no transitions out
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-4: Archived is always a terminal state — no transitions out
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-5: Every valid transition in the state machine is reachable
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-6: Every invalid transition is rejected
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-7: Terminal states have zero valid outgoing transitions
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-8: Draft->Completed is always invalid (skip transition not allowed)
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-9: Archived->Draft is always invalid (backwards transition not allowed)
+ [32m✓[39m src/__tests__/properties/events.property.test.ts[2m > [22mProperty 8: Event Lifecycle State Machine Validity[2m > [22mP8-10: State machine is deterministic — same transition always produces same result
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-1: Prompt built from clean title + keywords contains no PII
+ [31m×[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-2: Email addresses are always detected as PII
+[31m   → Property failed after 2 tests
+{ seed: 978699179, path: "1:0:3:0:0:0:1:1:1", endOnFailure: true }
+Counterexample: ["!@a.aa"]
+Shrunk 8 time(s)
+Got AssertionError: expected false to be true // Object.is equality
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:83:36
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:81:8
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:781:17)
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-3: UUID member IDs are always detected as PII
+ [31m×[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-4: Prompt with embedded email is detected as containing PII
+[31m   → Property failed after 1 tests
+{ seed: 1807132144, path: "0:0:2:1:0:1:1:1:1:1:1:1:1:1:1:1:1", endOnFailure: true }
+Counterexample: ["!@a.aa","!"]
+Shrunk 16 time(s)
+Got AssertionError: expected false to be true // Object.is equality
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:102:44
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:99:8
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:781:17)
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-5: Prompt with embedded memberId is detected as containing PII
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-6: stripPII removes emails from feedback text
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 20: No PII in Bedrock Prompts[2m > [22mP20-7: stripPII removes UUIDs from feedback text
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 21: AI Response Validation Rejection[2m > [22mP21-1: Response with < 100 words is always rejected
+ [31m×[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 21: AI Response Validation Rejection[2m > [22mP21-2: Response with > 500 words is always rejected[33m 1713[2mms[22m[39m
+[31m   → Property failed after 91 tests
+{ seed: -1327007862, path: "90:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:2:1:0:0:1:1:0:0:0:0:0:0:2:0:0:0:0:0:5:2:2:2:2:5:4:3:3:3:3:3:3:4:1:0:0:0:0:0:0:1:1:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:2:0:0:0:0:0:1:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:2:0:0:0:1:1:1:1:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:2:0:0:0:0:0:0:2:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:1:1:0:0:0:0:0:2:0:0:0:1:1:0:0:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:2:0:0:0:0:2:2:1:1:1:1:1:2:1:0:0:0:0:0:0:2:0:0:2:0:0:0:0:2:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:2:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:2:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:2:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:2:2:1:1:1:1:1:4:4:1:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:2:2:0:0:0:0:0:1:1:0:0:0:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:2:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:2:0:0:0:0:0:0:2:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:1:1:0:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:1:1:0:0:0:0:0:0", endOnFailure: true }
+Counterexample: [[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","!","!","!","!","!","!","!","!","!","!","! !","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","! ","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","! !","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!","!"," ","!","!","!"]]
+Shrunk 1342 time(s)
+Got AssertionError: expected true to be false // Object.is equality
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:163:53
+    at Property.predicate (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.js:14:54)
+    at Property.run (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/property/Property.generic.js:46:33)
+    at runIt (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:18:30)
+    at check (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:62:11)
+    at Proxy.assert (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/fast-check/lib/esm/check/runner/Runner.js:65:17)
+    at C:\kiro-uni-2026\infrastructure\lambda\src\__tests__\properties\ai.property.test.ts:158:8
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:135:14
+    at file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:60:26
+    at runTest (file:///C:/kiro-uni-2026/infrastructure/lambda/node_modules/@vitest/runner/dist/index.js:781:17)
+
+Hint: Enable verbose mode in order to have the list of all failing values encountered during the run[39m
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 21: AI Response Validation Rejection[2m > [22mP21-3: Empty response is always rejected
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 21: AI Response Validation Rejection[2m > [22mP21-4: Response with exactly 100-500 words is always accepted
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 22: Scheduling Suggestion Range and Ordering[2m > [22mP22-1: Valid suggestions (1-5, sorted, in-range) always pass validation
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 22: Scheduling Suggestion Range and Ordering[2m > [22mP22-2: Empty suggestion list is always invalid
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 22: Scheduling Suggestion Range and Ordering[2m > [22mP22-3: More than 5 suggestions is always invalid
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 22: Scheduling Suggestion Range and Ordering[2m > [22mP22-4: predictedAttendance outside [0, 100] always fails validation
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 22: Scheduling Suggestion Range and Ordering[2m > [22mP22-5: Suggestions with fewer than 2 reasoning factors always fail
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 22: Scheduling Suggestion Range and Ordering[2m > [22mP22-6: Out-of-order suggestions (not descending) always fail
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 23: Sentiment Score Range Enforcement[2m > [22mP23-1: Scores within [-1, 1] are returned unchanged
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 23: Sentiment Score Range Enforcement[2m > [22mP23-2: Scores below -1.0 are always clamped to -1.0
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 23: Sentiment Score Range Enforcement[2m > [22mP23-3: Scores above 1.0 are always clamped to 1.0
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 23: Sentiment Score Range Enforcement[2m > [22mP23-4: Clamped score is always in [-1, 1] regardless of input
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 23: Sentiment Score Range Enforcement[2m > [22mP23-5: Clamping is idempotent — clamping twice gives same result
+ [32m✓[39m src/__tests__/properties/ai.property.test.ts[2m > [22mProperty 23: Sentiment Score Range Enforcement[2m > [22mP23-6: Exact boundary values -1.0 and 1.0 are not modified
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m14 passed[39m[22m[90m (16)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m209 passed[39m[22m[90m (213)[39m
+[2m   Start at [22m 01:42:02
+[2m   Duration [22m 13.24s[2m (transform 31.80s, setup 6ms, collect 63.40s, tests 9.72s, environment 18ms, prepare 18.46s)[22m
+

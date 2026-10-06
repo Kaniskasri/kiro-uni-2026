@@ -1,0 +1,18 @@
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.0[39m [90mC:/kiro-uni-2026/infrastructure/lambda[39m
+
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22ma member with optedOut=true never has email sent, regardless of notification type
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22ma member with optedOut=false does have email dispatched for any notification type
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22mopt-out state is org-scoped: opted out of Org A does not suppress emails for Org B
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 14: Email Opt-Out Suppression[2m > [22mopt-out suppression is idempotent: calling opt-out twice yields the same suppression result
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mAllMembers: every org member appears in enqueue list exactly once
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mEventAttendees: every confirmed attendee appears exactly once
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mRole: only members with matching role are targeted, no duplicates
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22mManual: exactly the specified members are targeted (deduplicated), no extras
+ [32m✓[39m src/__tests__/properties/notifications.property.test.ts[2m > [22mProperty 13: Announcement Audience Targeting Completeness[2m > [22menqueue count always matches resolved audience size (no over- or under-enqueue)
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 01:43:01
+[2m   Duration [22m 2.28s[2m (transform 224ms, setup 0ms, collect 938ms, tests 158ms, environment 0ms, prepare 460ms)[22m
+
